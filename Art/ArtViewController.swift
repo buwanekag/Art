@@ -45,7 +45,7 @@ class ArtViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
                 // Saving current location
     
     
-                func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+                func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
                 let location = locations.last
                 let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
                 let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
@@ -67,13 +67,13 @@ class ArtViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
                     ) as! GeoPoint
         
                     
-                        backendless.geoService.savePoint(
+                        backendless.geoService.save(
                     currentLocation,
-                        response: { (let point:GeoPoint!) -> () in
+                        response: { (point:GeoPoint!) -> () in
                             print("Async: geo point saved.Object ID - \(point.objectId)")
         
                         },
-                        error: { (let fault : Fault!) -> () in
+                        error: { (fault : Fault!) -> () in
                             print("Server reported an error: \(fault)")
                         }
                     
@@ -109,7 +109,7 @@ class ArtViewController: UIViewController,CLLocationManagerDelegate,MKMapViewDel
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func leaveMarkButtonPressed(sender:UIButton){
+    @IBAction func leaveMarkButtonPressed(_ sender:UIButton){
         self.createLocationPoint()
     }
     

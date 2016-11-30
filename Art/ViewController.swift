@@ -42,7 +42,7 @@ class ViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDelega
     
     
     
-        func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             let location = locations.last
             let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
@@ -51,25 +51,25 @@ class ViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDelega
         
             //Get geo points from Backendless
             
-            let query = BackendlessGeoQuery.queryWithPoint(GEO_POINT(latitude: location!.coordinate.latitude,longitude: location!.coordinate.longitude),radius: 0.2,units: MILES,categories: ["Places"]) as! BackendlessGeoQuery
+            let query = BackendlessGeoQuery.query(with: GEO_POINT(latitude: location!.coordinate.latitude,longitude: location!.coordinate.longitude),radius: 0.2,units: MILES,categories: ["Places"]) as! BackendlessGeoQuery
         
             query.includeMeta = true
-        
+        3
         backendless.geoService.getPoints(
         
             query,
-        response: { (let points : BackendlessCollection!) -> () in
+        response: { (points : BackendlessCollection!) -> () in
             self.nextPageAsync(points)
             print("\(query)")
             },
-        error: { (let fault: Fault!) -> () in
+        error: { (fault: Fault!) -> () in
             print("server reported an error: \(fault)")
             
             }
         )
     }
    
-        func nextPageAsync(points: BackendlessCollection) {
+        func nextPageAsync(_ points: BackendlessCollection) {
             
             if points.getCurrentPage().count == 0 {
     
@@ -83,10 +83,10 @@ class ViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDelega
                 
                 //geoPoint.
                 //geoPoint.distance.rangeValue.length
-                if geoPoint.distance.integerValue <= 5 {
+                if geoPoint.distance.intValue <= 5 {
                 
                 
-                self.messageDisplay.text = geoPoint.metadata.valueForKey("Message") as? String
+                self.messageDisplay.text = geoPoint.metadata.value(forKey: "Message") as? String
                 
                print("\(geoPoint.metadata)")
             
@@ -97,10 +97,10 @@ class ViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDelega
             }
             
             points.nextPageAsync(
-                { (let rest : BackendlessCollection!) -> () in
+                { (rest : BackendlessCollection!) -> () in
                     self.nextPageAsync(rest)
                 },
-                error: { (let fault : Fault!) -> () in
+                error: { (fault : Fault!) -> () in
                     print("Server reported an error: \(fault)")
                 }
             )
@@ -125,7 +125,7 @@ class ViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDelega
         super.didReceiveMemoryWarning()
       
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.displayLocationPoint()
     }
 

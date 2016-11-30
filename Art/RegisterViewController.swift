@@ -23,7 +23,7 @@ import UIKit
         
        
         
-        @IBAction func registerButtonPressed(sender:UIButton){
+        @IBAction func registerButtonPressed(_ sender:UIButton){
             let userEmail = emailTextField.text
             let userPassword = passwordTextField.text
             let userRepeatPassword = repeatPasswordTextField.text
@@ -43,29 +43,29 @@ import UIKit
             
                 
                 let user = BackendlessUser()
-                user.email = userEmail
-                user.password = userPassword
+                user.email = userEmail as NSString!
+                user.password = userPassword as NSString!
             
                 
                 backendless.userService.registering(user,
                 response: { ( registeredUser : BackendlessUser!) -> () in
                 print("User has been registered (ASYNC): \(registeredUser)")
-                let myAlert = UIAlertController(title: "Alert",message: "Registration is successful,Thank You",preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.Default){ action in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                let myAlert = UIAlertController(title: "Alert",message: "Registration is successful,Thank You",preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.default){ action in
+                    self.dismiss(animated: true, completion: nil)
                     }
                     myAlert.addAction(okAction)
-                    self.presentViewController(myAlert,animated: true,completion: nil)
+                    self.present(myAlert,animated: true,completion: nil)
                     
                     },
                 error: { ( fault : Fault!) -> () in
                 print("Server reported an error: \(fault)")
-                    let myAlert = UIAlertController(title: "Alert",message: "Registration was not successful,Try Again",preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.Default){ action in
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                    let myAlert = UIAlertController(title: "Alert",message: "Registration was not successful,Try Again",preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.default){ action in
+                        self.dismiss(animated: true, completion: nil)
                     }
                     myAlert.addAction(okAction)
-                    self.presentViewController(myAlert,animated: true,completion: nil)
+                    self.present(myAlert,animated: true,completion: nil)
                     
                     
                     }
@@ -77,13 +77,13 @@ import UIKit
         
         
        
-        func displayAlertMessage(userMessage:String){
+        func displayAlertMessage(_ userMessage:String){
             
-            let myAlert = UIAlertController(title:"Alert",message: userMessage,preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.Default,handler: nil)
+            let myAlert = UIAlertController(title:"Alert",message: userMessage,preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok",style: UIAlertActionStyle.default,handler: nil)
             
             myAlert.addAction(okAction)
-            self.presentViewController(myAlert,animated: true,completion: nil)
+            self.present(myAlert,animated: true,completion: nil)
         }
         
     

@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     
     
     
-    @IBAction func loginButtonTapped(sender:AnyObject){
+    @IBAction func loginButtonTapped(_ sender:AnyObject){
         
         let userEmail = emailTextField.text
         let userPassword = passwordTextField.text
@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
                 response: { ( registeredUser : BackendlessUser!) -> () in
                     print("User has been logged in (ASYNC): \(registeredUser)")
                     
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 },
                 error: { ( fault : Fault!) -> () in
                     print("Server reported an error: \(fault)")

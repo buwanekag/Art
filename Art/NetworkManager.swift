@@ -16,7 +16,7 @@ class NetworkManager: NSObject {
     var serverReach: Reachability?
     var serverAvailable = false
     
-    func reachabilityChanged(note: NSNotification) {
+    func reachabilityChanged(_ note: Notification) {
         let reach = note.object as! Reachability
         serverAvailable = !(reach.currentReachabilityStatus().rawValue == NotReachable.rawValue)
         if serverAvailable {
